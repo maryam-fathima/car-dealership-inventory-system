@@ -1,0 +1,208 @@
+const API_URL = "http://localhost:8000";
+
+export type Vehicle = {
+  id: number;
+  make: string;
+  model: string;
+  category: string;
+  price: number;
+  quantity: number;
+  image_url?: string;
+  created_at?: string;
+};
+export type User = {
+  user_id: number;
+  username: string;
+  role: string;
+};
+
+function token() {
+  return localStorage.getItem("access_token");
+}
+
+function headers(): HeadersInit {
+  const t = token();
+
+  return {
+    "Content-Type": "application/json",
+    ...(t ? { Authorization: `Bearer ${t}` } : {}),
+  };
+}
+
+async function result(response: Response) {
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(data.detail || "Request failed");
+  }
+
+  return data;
+}
+
+
+// LOGIN
+export async function login(
+  username: string,
+  password: string
+) {
+  return result(
+    await fetch(`${API_URL}/api/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+  );
+}
+
+
+// REGISTER
+export async function register(
+  username: string,
+  password: string
+) {
+  return result(
+    await fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    })
+  );
+}
+
+
+// GET VEHICLES
+export async function getVehicles() {
+  return result(
+    await fetch(`${API_URL}/api/vehicles/`, {
+      headers: headers(),
+    })
+  );
+}
+
+
+// SEARCH VEHICLES
+export async function searchVehicles(
+  params: Record<string, string>
+) {
+  const q = new URLSearchParams();
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      q.set(key, value);
+    }
+  });
+
+  return result(
+    await fetch(
+      `${API_URL}/api/vehicles/search?${q.toString()}`,
+      {
+        headers: headers(),
+      }
+    )
+  );
+}
+
+
+// ADD VEHICLE
+export async function addVehicle(
+  vehicle: Omit<Vehicle, "id" | "created_at">
+) {
+  return result(
+    await fetch(`${API_URL}/api/vehicles/`, {
+      method: "POST",
+      headers: headers(),
+      body: JSON.stringify(vehicle),
+    })
+  );
+}
+
+
+// UPDATE VEHICLE
+export async function updateVehicle(
+  id: number,
+  vehicle: Omit<Vehicle, "id" | "created_at">
+) {
+  return result(
+    await fetch(`${API_URL}/api/vehicles/${id}`, {
+      method: "PUT",
+      headers: headers(),
+      body: JSON.stringify(vehicle),
+    })
+  );
+}
+
+
+// DELETE VEHICLE
+export async function deleteVehicle(id: number) {
+  return result(
+    await fetch(`${API_URL}/api/vehicles/${id}`, {
+      method: "DELETE",
+      headers: headers(),
+    })
+  );
+}
+
+
+// PURCHASE VEHICLE
+export async function purchaseVehicle(id: number) {
+  return result(
+    await fetch(
+      `${API_URL}/api/vehicles/${id}/purchase`,
+      {
+        method: "POST",
+        headers: headers(),
+      }
+    )
+  );
+}
+
+
+// RESTOCK VEHICLE
+export async function restockVehicle(
+  id: number,
+  quantity: number
+) {
+  return result(
+    await fetch(
+      `${API_URL}/api/vehicles/${id}/restock?quantity=${quantity}`,
+      {
+        method: "POST",
+        headers: headers(),
+      }
+    )
+  );
+}
+
+
+// GET CURRENT USER
+export function getCurrentUser(): User | null {
+  const t = token();
+
+  if (!t) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(
+      atob(t.split(".")[1])
+    ) as User;
+  } catch {
+    return null;
+  }
+}
+
+
+// LOGOUT
+export function logout() {
+  localStorage.removeItem("access_token");
+}
