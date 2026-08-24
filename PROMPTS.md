@@ -13,37 +13,34 @@ or paste the original chat logs without summarising them.
 ### 1. Project Setup and Backend
 
 ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
+https://chatgpt.com/c/6a89850c-9198-83e9-850b-567697375e5f
 
 
 ### 2. Frontend Development
 
 ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
+https://chatgpt.com/c/6a8a896e-a18c-83e8-9120-47f96b359491
 
 
 ### 3. Authentication and Login
 
 ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
+https://chatgpt.com/c/6a8a896e-a18c-83e8-9120-47f96b359491
 
 
 ### 4. Vehicle Inventory and Purchase
 
 ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
+https://chatgpt.com/c/6a8a896e-a18c-83e8-9120-47f96b359491
 
 
 ### 5. Debugging and Testing
 
 ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
+https://chatgpt.com/c/6a8a896e-a18c-83e8-9120-47f96b359491
 
 
-### 6. GitHub and Documentation
 
-ChatGPT conversation:
-[PASTE YOUR ACTUAL SHARED CHAT LINK HERE]
 
 
 ## Notes
